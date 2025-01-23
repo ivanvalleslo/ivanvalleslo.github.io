@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Conexión a fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:wght@700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Saira+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <title>Iván Vallés Portfolio</title>
+    <style>
+        /* Reset de márgenes, padding y box-sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos del body */
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            overscroll-behavior: none; /* Evita el rebote */
+        }
+
+        /* Sección del video en pantalla completa */
+.video-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #000000; /* Fondo negro para evitar flashes */
+    z-index: -1; /* Video detrás del contenido */
+}
+
+.video-section iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2); /* Centra y escala el video */
+    width: 177.78vh; /* 16:9 Aspect Ratio -> (100 / 9) * 16 */
+    height: 100vh; /* Altura completa del viewport */
+    pointer-events: none; /* Desactiva interacción con el iframe */
+    border: none; /* Sin bordes */
+}
+
+        
+        .text-overlay-container {
+            position: absolute;
+            top: 45%; /* Posición vertical del texto */
+            left: 0;
+            height: 55%;
+            width: 100%; /* Ocupa todo el ancho de la pantalla */
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0, 0, 0, 1) 100%); /* Degradado con más opacidad abajo */
+            text-align: center; /* Centra el texto */
+            padding: 10px 0; /* Espaciado interno del fondo */
+        }
+        
+        .text-overlay img {
+            height: 20%;
+            width: 20%;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 75%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255,255,255,0.70); /* Color del texto */
+            font-family: "Roboto";
+            font-size: 1.5em; /* Tamaño del texto */
+            font-weight:400; /* Puedes ajustar el estilo */
+        }
+        
+        /* Estilos de ambas secciones */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            background: #FFFFFF;
+            margin-top: 100vh; /* Empieza debajo del video */
+        }
+
+        /* Sección de introducción */
+        .intro-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+            height: 12vh;
+            background: #FFFFFF;
+            color: #0C0C0C;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+            transform: translateY(100vh);
+        }
+
+        .intro-section .ivan {
+            font-family: "Roboto", serif;
+            font-weight: 450;
+            font-size: 1.5rem;
+			text-decoration: none;
+			color: #0C0C0C;
+		}
+        #links {
+            font-family: "Roboto", serif;
+            color: #fff;
+            display: flex;
+            gap: 1rem;
+        }
+
+        #links a {
+            font-family: "Roboto", serif;
+            font-style: italic;
+            font-weight: 400;
+            text-decoration: none;
+            color:#949494;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        #links .gd {
+            color: #000000;
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        #links a:hover {
+            font-family: "Roboto", serif;
+            font-style: normal;
+            font-weight: bold;
+            background: #fff;
+            color: #000;
+        }
+
+        /* Sección de proyectos en grid */
+        .projects-section {
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            width: 100%;
+            height: calc(80vh * 6);
+            position: relative;
+            z-index: 0;
+            gap: 0;
+        }
+
+        .project {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        .project img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s, filter 0.3s;
+        }
+
+        .project:hover img {
+            transform: scale(1.1);
+            filter: brightness(50%); /* Oscurecer la imagen */
+        }
+
+        .project-name {
+            position: absolute;
+            bottom: 85%; /* Ajustar según sea necesario */
+            left: 8%;
+            text-align: left;
+            color: white;
+            font-size: 2rem;
+            font-style: italic;
+            opacity: 0; /* Ocultar el texto inicialmente */
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1;
+        }
+
+        .project:hover .project-name {
+            opacity: 1; /* Mostrar texto al pasar el cursor */
+        }
+
+        .project-date {
+            position: absolute;
+            bottom: 80%;
+            left: 8%;
+            text-align: left;
+            color: white;
+            font-size: 1.2rem;
+            font-style: normal;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1;
+        }
+
+        .project:hover .project-date {
+            opacity: 1;
+        }
+
+        .project a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            text-decoration: none;
+        }
+
+        /* Estilo del footer */
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #0000;
+            color: #fff;
+            font-size: 14px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        /* Activar la sección de introducción al hacer scroll */
+        body.scrolled .intro-section {
+            transform: translateY(0);
+        }
+
+		/* Estilo de la barra de menú (Navegación) */
+        #mobile-menu {
+			font-family: "Roboto", serif;
+			font-style: italic;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #FFFFFF;
+            display: none; /* Inicialmente oculto */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 999;
+        }
+
+        #mobile-menu.active {
+            display: flex; /* Mostrar cuando está activo */
+        }
+
+        #mobile-menu a {
+            font-family: "Roboto", serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #949494;
+			transition: background 0.3s, color 0.3s
+        }
+		
+		#mobile-menu a:hover {
+            font-style: normal;
+            font-weight: bold;
+            background: #fff;
+            color: #000;
+        }
+	
+		#mobile-menu .gd {
+            color: #000000;
+            font-style: normal;
+            font-weight: bold;
+        }
+		
+        /* Estilos de la navbar (menú hamburguesa) */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .burger .line {
+            width: 25px;
+            height: 3px;
+            background-color: black;
+            border-radius: 5px;
+        }
+		.close{
+			display: none;
+			position: absolute;
+    		top: 20px;  /* Ajusta la distancia desde el top */
+    		right: 20px; /* Ajusta la distancia desde la derecha */
+		}
+        @media (max-width: 768px) {
+            footer {
+                display: none;
+            }
+
+            .project {
+                height: 60vh;
+            }
+
+            .projects-section {
+                gap: 0px;
+                grid-template-columns: 1fr;
+            }
+
+            .text-overlay {
+                font-size: 1.3em;
+				font-weight: 300;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .close {
+                display: flex;
+            }
+
+            .intro-section h1 {
+                font-size: 1.3rem;
+            }
+
+            #links {
+                /*position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: blue;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                transform: translateX(-100%);
+                transition: transform 0.5s ease;*/
+				display: none;
+            }
+
+            /*#links.active {
+                transform: translateX(0);
+            }
+
+            #links a {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+                transition: background 0.3s, color 0.3s;
+            }*/
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Section -->
+    <div class="video-section">
+    <iframe
+    src="https://player.vimeo.com/video/1049595202?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479?background=1&autoplay=1&loop=1&muted=1&dnt=1&controls=0"
+    frameborder="0"
+    allow="autoplay; fullscreen"
+    allowfullscreen
+  ></iframe>
+        <div class="text-overlay-container">
+            <div class="text-overlay">Desliza para ver mis proyectos! :) <h2><img src="img/arrow.svg" alt="arrow"></h2></div>
+        </div>
+    </div>
+	
+	<!-- Menú móvil, fuera de main-content -->
+    <div id="mobile-menu">
+		<a class="close" href="#" onClick="cerrar()"><img src="img/icons8-close.svg" width="30px" alt="x"></a>
+        <a class="gd" href="index.html">Graphic Design</a>
+        <a href="photography.html">Photography</a>
+    </div>
+
+    <!-- Main Content: Intro + Projects -->
+    <div class="main-content">
+        <!-- Intro Section -->
+        <div class="intro-section">    
+            <a class="ivan" href="index.html" >Iván Vallés/ Junior Art director</a>    
+            <button class="burger" aria-label="Toggle navigation" onClick="abrir()">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+            <div id="links">
+                <a class="gd" href="index.html">Graphic Design </a>
+                <a href="photography.html">Photography</a>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="projects-section">
+            <!-- Aquí van los proyectos -->
+            <div class="project">
+                <a href="burn-in.html">
+                    <img src="img/Zip SD.png" alt="Project 1">
+					<div class="project-name">Burn In</div>
+					<div class="project-date">2024</div>
+                </a>
+            </div>
+            <div class="project">
+                <a href="suda-yoga-studio.html">
+                    <img src="img/sd.jpg" alt="Project 2">
+					<div class="project-name">Suda* Yoga Studio</div>
+					<div class="project-date">2023</div>
+                </a>
+            </div>
+            <!-- Repeat for all 12 projects -->
+			<div class="project">
+                <a href="right-here-right-now.html">
+                    <img src="img/Right.png" alt="Project 3">
+					<div class="project-name">Right Here Right Now</div>
+					<div class="project-date">2023</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="architype.html">
+                    <img src="img/architype.png" alt="Project 4">
+					<div class="project-name">Architype</div>
+					<div class="project-date">2022</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="trauma-regular.html">
+                    <img src="img/trauma.png" alt="Project 5">
+					<div class="project-name">Trauma Regular</div>
+					<div class="project-date">2021</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="dieter-rams.html">
+                    <img src="img/dieter.png" alt="Project 6">
+					<div class="project-name">Exposición Dieter Rams</div>
+					<div class="project-date">2022</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="casa-amella.html">
+                    <img src="img/casaamella.png" alt="Project 7">
+					<div class="project-name">Casa Amella</div>
+					<div class="project-date">2022</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="avincla.html">
+                    <img src="img/avincla.jpg" alt="Project 8">
+					<div class="project-name">Avincla</div>
+					<div class="project-date">2024</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="brandemia.html">
+                    <img src="img/brandemia.jpg" alt="Project 9">
+					<div class="project-name">Brandemia</div>
+					<div class="project-date">2024</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="inherente.html">
+                    <img src="img/inherent.png" alt="Project 10">
+					<div class="project-name">Inherente</div>
+					<div class="project-date">2023</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="nexus.html">
+                    <img src="img/nexus.png" alt="Project 11">
+					<div class="project-name">Nexus energía</div>
+					<div class="project-date">2024</div>
+                </a>
+            </div>
+			<div class="project">
+                <a href="linkia-fp.html">
+                    <img src="img/linkia.jpg" alt="Project 12">
+					<div class="project-name">Linkia FP</div>
+					<div class="project-date">2024</div>
+                </a>
+            </div> 
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2024 Iván Vallés Lorente. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navegación móvil
+        function abrir() {
+            document.getElementById('mobile-menu').classList.add('active');  // Activa el menú
+        }
+
+        function cerrar() {
+            document.getElementById('mobile-menu').classList.remove('active');  // Desactiva el menú
+        }
+
+        // Desactivar clic derecho en toda la página
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); // Prevenir el menú contextual
+        });
+
+        // Activar efecto al hacer scroll
+        document.addEventListener('scroll', () => {
+            const introSection = document.querySelector('.intro-section');
+            if (window.scrollY > 0) {
+                document.body.classList.add('scrolled');
+            } else {
+                document.body.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

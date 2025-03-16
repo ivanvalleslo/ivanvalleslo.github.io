@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Iván Vallés Portfolio</title>
+</head>
+<body class="index">
+    <!-- Video Section -->
+    <div class="video-section">
+        <iframe
+            src="https://player.vimeo.com/video/1049595202?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479?background=1&autoplay=1&loop=1&muted=1&dnt=1&controls=0"
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+        ></iframe>
+        <div class="text-overlay-container">
+            <div class="text-overlay">Desliza para ver mis proyectos! :) <h2><img src="img/arrow.svg" alt="arrow"></h2></div>
+        </div>
+    </div>
+
+    <!-- Menú móvil -->
+    <div id="mobile-menu">
+        <a class="close" href="#" onClick="cerrar()"><img src="img/icons8-close.svg" width="30px" alt="x"></a>
+        <a class="gd" href="index.html">Graphic Design</a>
+        <a href="photography.html">Photography</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Intro Section -->
+        <div class="intro-section">    
+            <a class="ivan" href="index.html">Iván Vallés/ Junior Art director</a>    
+            <button class="burger" aria-label="Toggle navigation" onClick="abrir()">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+            <div id="links">
+                <a class="gd" href="index.html">Graphic Design </a>
+                <a href="photography.html">Photography</a>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="projects-section" id="diseno-projects">
+            <!-- Los proyectos de diseño se cargarán aquí -->
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2024 Iván Vallés Lorente. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

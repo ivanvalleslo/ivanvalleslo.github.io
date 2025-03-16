@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Burn In",
+    "date": "2024",
+    "category": "diseno",
+    "description": [
+      "Right here Right now, es un proyecto de caligrafía itálica diseñada y renderizada en 3D.",
+      "En muchas ocasiones nuestro pasado y nuestro futuro nos adentran en una vorágine de emociones que nos afectan muchas veces de manera negativa."
+    ],
+    "images": [
+      "img/BurnIn/posters.png",
+      "img/BurnIn/gif.gif",
+      "img/BurnIn/posters1.png",
+      "img/BurnIn/posters2.png"
+    ],
+    "link": "proyectos/burnin.html"
+  },
+  {
+    "id": 2,
+    "title": "Cold",
+    "date": "2019",
+    "category": "fotografia",
+    "description": [
+      "Este es un proyecto de fotografía que explora el frío y la soledad."
+    ],
+    "images": [
+      "img/cold.jpg"
+    ],
+    "link": "proyectos/cold.html"
+  }
+]
